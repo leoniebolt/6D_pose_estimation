@@ -14,7 +14,7 @@ Ultralytics
 Conda
 PyTorch
 
-´´´bash
+```bash
 pip install ultralytics
 ```
 
