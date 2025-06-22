@@ -129,6 +129,8 @@ and run the main.py file again.
 - Detects objects in RGB images
 - Saves bounding boxes and class labels to JSON files
 - Creates annotated detection images
+
+
 ![1_yolo_detected](https://github.com/user-attachments/assets/76f96cb0-619e-4ad6-a65f-90c991c712cc)
 
 
@@ -146,7 +148,8 @@ and run the main.py file again.
     - Detection visualization
     - Pose inference
     - Output visualization
-![1_poses](https://github.com/user-attachments/assets/f38095d8-a38e-4722-9def-8371c459c54a)
+
+
 ![0_all_results](https://github.com/user-attachments/assets/ea2c35d2-7cf5-4e0e-af89-0086a7af951b)
 
 
@@ -155,7 +158,10 @@ and run the main.py file again.
 
 - Renders 3D bounding boxed and coordinate axes from predicted poses onte original image.
 - Saves visualized output per frame for each image index.
+
+
 ![1_poses](https://github.com/user-attachments/assets/c219d9a4-0f54-4ca4-b650-47e18ada1fa1)
+
 
 
 # 4.5 Postprocessing & Cleanup
