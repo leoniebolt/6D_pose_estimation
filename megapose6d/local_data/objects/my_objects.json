@@ -1,0 +1,27 @@
+{
+  "morobot-s_Achse-1A_gray": {
+    "symmetries": [],
+    "size_x": 20.9, "size_y": 101, "size_z": 80
+  }
+}
+
+{
+  "morobot-s_Achse-1A_yellow": {
+    "symmetries": [],
+    "size_x": 20.9, "size_y": 101, "size_z": 80
+  }
+}
+
+{
+  "morobot-s_Achse-1B_yellow": {
+    "symmetries": [],
+    "size_x": 16, "size_y": 101, "size_z": 80
+  }
+}
+
+{
+  "morobot-s_Achse-3B_gray": {
+    "symmetries": [],
+    "size_x": 80, "size_y": 120, "size_z": 16
+  }
+}
