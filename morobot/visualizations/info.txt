@@ -1,0 +1,9 @@
+Here will {index}_yolo_detected.png be automatically generated:
+
+The following files will be deleted after every .png file was processed:
+
+all_results.png
+contour_overlay.png
+detections.png
+mesh_overlay.png
+poses.png
