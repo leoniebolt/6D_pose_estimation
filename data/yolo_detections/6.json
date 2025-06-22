@@ -1,0 +1,56 @@
+[
+  {
+    "label": "1B_yellow",
+    "bbox_modal": [
+      89,
+      106,
+      270,
+      227
+    ]
+  },
+  {
+    "label": "1B_yellow",
+    "bbox_modal": [
+      335,
+      197,
+      518,
+      323
+    ]
+  },
+  {
+    "label": "1A_yellow",
+    "bbox_modal": [
+      263,
+      105,
+      440,
+      225
+    ]
+  },
+  {
+    "label": "1A_yellow",
+    "bbox_modal": [
+      227,
+      221,
+      348,
+      390
+    ]
+  },
+  {
+    "label": "1A_gray",
+    "bbox_modal": [
+      87,
+      234,
+      212,
+      400
+    ]
+  },
+  {
+    "label": "3B_grey",
+    "bbox_modal": [
+      441,
+      229,
+      576,
+      413
+    ]
+  }
+]
