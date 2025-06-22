@@ -1,0 +1,2 @@
+Here should be the 3B_grey.ply file!
+Note that this file is written with an "e", unlike 1A_gray, which is spelled with an "a".
