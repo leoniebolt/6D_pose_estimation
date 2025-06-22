@@ -10,7 +10,7 @@ Also the .ply files are from them, since it did not work with mine, but with the
 I could, unfortunately not resolve this issue.
 So therefore the box dimensions are the same.
 
-## Working environment
+## 1. Working environment
 All the current packages are listed in the file environment_packages.txt
 
 Python version: 3.9.23
