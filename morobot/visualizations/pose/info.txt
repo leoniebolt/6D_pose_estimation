@@ -1,0 +1,3 @@
+Here will be the following files automatically generated:
+{index}_object_data.json
+{index}_poses.png
