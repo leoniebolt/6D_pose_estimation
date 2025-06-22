@@ -1,6 +1,15 @@
 ## 6D_pose_estimation
 Estimating the 6D pose of morobot parts with trained yolo model and megapose6D.
 
+## DISCLAIMER
+I got help from a collegue, since many things did not work with me.
+
+Therefore, they may be many logic similiarities.
+
+Also the .ply files are from them, since it did not work with mine, but with theirs.
+I could, unfortunately not resolve this issue.
+So therefore the box dimensions are the same.
+
 ## Working environment
 All the current packages are listed in the file environment_packages.txt
 
@@ -120,11 +129,16 @@ and run the main.py file again.
 - Detects objects in RGB images
 - Saves bounding boxes and class labels to JSON files
 - Creates annotated detection images
+![1_yolo_detected](https://github.com/user-attachments/assets/76f96cb0-619e-4ad6-a65f-90c991c712cc)
+
+
+
 
 # 4.2 Preparation for MegaPose
 
 - Copies RGB, depth, detection, camera intrinsics, mesh files into the megapose example directory.
 - Validates 3D mesh files using trimesh. Since I had often problems with my .ply files, I implemented a debugging feature. I used the .ply files from a collegue, since for some reason, I couldn't export my own .ply files.
+
 
 # 4.3 Pose Estimation with MegaPose
 
@@ -132,11 +146,17 @@ and run the main.py file again.
     - Detection visualization
     - Pose inference
     - Output visualization
+![1_poses](https://github.com/user-attachments/assets/f38095d8-a38e-4722-9def-8371c459c54a)
+![0_all_results](https://github.com/user-attachments/assets/ea2c35d2-7cf5-4e0e-af89-0086a7af951b)
+
+
  
 # 4.4 Visualization
 
 - Renders 3D bounding boxed and coordinate axes from predicted poses onte original image.
 - Saves visualized output per frame for each image index.
+![1_poses](https://github.com/user-attachments/assets/c219d9a4-0f54-4ca4-b650-47e18ada1fa1)
+
 
 # 4.5 Postprocessing & Cleanup
 
