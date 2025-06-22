@@ -1,0 +1,52 @@
+name: megapose_env2
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - ipython
+  - ipykernel
+  - jupyterlab
+  - notebook<7
+  - nb_conda_kernels
+  - jupyter_contrib_nbextensions
+  - pillow
+  - selenium
+  - geckodriver
+  - firefox
+  - transforms3d
+  - webdataset
+  - omegaconf
+  - imageio
+  - pypng
+  - trimesh
+  - panda3d
+  - pinocchio
+  - rclone
+
+  # PyTorch & torchvision (bitte genau die Version passend zu CUDA wählen)
+  - pytorch=1.11.0
+  - torchvision=0.12.0
+  - cudatoolkit=11.3.1
+
+  - joblib
+  - wget
+  - python-wget
+
+  # Für Deep Learning und megapose typische pip-Pakete:
+  - pip:
+    - numpy
+    - scipy
+    - matplotlib
+    - scikit-learn
+    - tqdm
+    - tensorboard
+    - opencv-python
+    - scikit-image
+    - yacs
+    - detectron2 @ https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.11/index.html  # Falls nötig
+    - torchvision==0.12.0
+    - torch==1.11.0
+    # ggf. weitere megapose-spezifische Pakete hier
