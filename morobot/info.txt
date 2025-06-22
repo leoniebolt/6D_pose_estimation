@@ -1,2 +1,0 @@
-Here will be the image_dept.png and image_rgb.png files generated.
-Once all images are processed they will be automatically deleted.
