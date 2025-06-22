@@ -1,2 +1,0 @@
-Here will be the object_data.json generated.
-Once all images are processed, it will be automatically deleted.
