@@ -90,6 +90,10 @@ cd local_data
 mkdir examples
 ```
 
+In the folder morobot you should delete all the .txt files (in all folders and subfolders), otherwise an error occurs.
+
+I somehow cannot make an empty folder in github.
+
 Into that folder copy the morobot folder in 6D_pose_estimation/data, which contains the following:
 
 - Folder "meshes":
