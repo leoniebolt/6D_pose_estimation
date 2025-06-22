@@ -176,19 +176,37 @@ def process_images():
         visualize()
 
         ensure_dir_exists(f"{dst}/visualizations/pose")
-        ensure_dir_exists(f"{dst}/visualizations/detections")
 
         shutil.copy2(f"{dst}/visualizations/poses.png", f"{dst}/visualizations/pose/{i}_poses.png")
-        shutil.copy2(f"{dst}/visualizations/all_results.png", f"{dst}/visualizations/pose/{i}_all_results.png")
-        shutil.copy2(f"{dst}/visualizations/detections.png", f"{dst}/visualizations/detections/{i}_detections.png")
         shutil.copy2(f"{dst}/outputs/object_data.json", f"{dst}/visualizations/pose/{i}_object_data.json")
         yolo_img = f"data/yolo_detections/{i}_detected.png"
         if os.path.exists(yolo_img):
             shutil.copy2(yolo_img, f"{dst}/visualizations/{i}_yolo_detected.png")
 
+    # ======= CLEANUP =======
+    files_to_delete = [
+        "megapose6d/local_data/examples/morobot/inputs/object_data.json",
+        "megapose6d/local_data/examples/morobot/outputs/object_data.json",
+        "megapose6d/local_data/examples/morobot/visualizations/all_results.png",
+        "megapose6d/local_data/examples/morobot/visualizations/contour_overlay.png",
+        "megapose6d/local_data/examples/morobot/visualizations/detections.png",
+        "megapose6d/local_data/examples/morobot/visualizations/mesh_overlay.png",
+        "megapose6d/local_data/examples/morobot/visualizations/poses.png",
+        "megapose6d/local_data/examples/morobot/image_rgb.png",
+        "megapose6d/local_data/examples/morobot/image_depth.png",
+    ]
+
+    for file_path in files_to_delete:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"[CLEANUP] Deleted: {file_path}")
+        else:
+            print(f"[CLEANUP] File not found (ok): {file_path}")
+
+
 if __name__ == "__main__":
-    print("[PIPELINE] Starte YOLO → MegaPose Pipeline")
+    print("[PIPELINE] Starting YOLO → MegaPose Pipeline")
     detect_and_save()
     validate_meshes()
     process_images()
-    print("[DONE] Verarbeitung abgeschlossen.")
+    print("[DONE] All images processed.")
