@@ -62,7 +62,7 @@ cd local_data
 mkdir examples
 ```
 
-Into that folder move the morobot folder in 6D_pose_estimation, which contains the following:
+Into that folder copy the morobot folder in 6D_pose_estimation/data, which contains the following:
 - Folder "meshes":
   In there you should put the .ply files. Every morobot part into its respective folder in "meshes".
   So for example for the morobot-s_Achse-1A_gray: meshes/1A_gray/1A_gray.ply, and so on.
