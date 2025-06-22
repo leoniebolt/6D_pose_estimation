@@ -177,7 +177,7 @@ def process_all_images():
         # Save YOLO detection image with index if exists
         yolo_img = f"data/yolo_detections/{idx}_detected.png"
         if os.path.exists(yolo_img):
-            shutil.copy2(yolo_img, f"{base}/visualizations/{idx}_yolo_detected.png")
+            shutil.copy2(yolo_img, f"{base}/visualizations/yolo_detections/{idx}_yolo_detected.png")
 
         # === Save all_results.png and object_data.json BEFORE cleanup ===
         all_results_src = f"{base}/visualizations/all_results.png"
@@ -191,6 +191,12 @@ def process_all_images():
         make_dir(object_data_dst_dir)
         if os.path.exists(object_data_src):
             shutil.copy2(object_data_src, f"{object_data_dst_dir}/{idx}_object_data.json")
+
+        yolo_detected_src = f"{base}/visualizations/{idx}_yolo_detected.png"
+        yolo_detected_dst_dir = f"{base}/visualizations/yolo_detections"
+        make_dir(yolo_detected_dst_dir)
+        if os.path.exists(yolo_detected_src):
+            shutil.copy2(yolo_detected_src, f"{yolo_detected_dst_dir}/{idx}_yolo_detected.png")
 
     # Clean up temporary files AFTER saving results
     cleanup_files = [
