@@ -4,7 +4,7 @@ Estimating the 6D pose of morobot parts with trained yolo model and megapose6D.
 # DISCLAIMER
 I got help from a collegue, since many things did not work with me.
 
-Therefore, they may be many logic similiarities.
+Therefore, they may be some logic similiarities.
 
 Also the .ply files are from them, since it did not work with mine, but with theirs.
 I could, unfortunately not resolve this issue.
