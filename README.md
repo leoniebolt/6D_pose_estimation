@@ -69,7 +69,7 @@ notebook=6.4.12
 To be able to use rgb data, change in the file megpose6d/src/megapose/scripts/run_inference_on_example.py the following (simply add "-icp") [line 213]:
 
 ```bash
-    parser.add_argument("--model", type=str, default="megapose-1.0-RGB-multi-hypothesis-icp")
+parser.add_argument("--model", type=str, default="megapose-1.0-RGB-multi-hypothesis-icp")
 ```
 
 Then proceed with the installation:
