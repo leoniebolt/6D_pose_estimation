@@ -1,3 +1,4 @@
+# === IMPORTS ===
 import os
 import json
 import shutil
@@ -10,6 +11,7 @@ from scipy.spatial.transform import Rotation as R
 
 # === YOLO OBJECT DETECTION ===
 def detect_objects():
+    # Load trained YOLO model
     model_path = "yolo/my_model/my_model.pt"
     model = YOLO(model_path)
 
@@ -19,6 +21,7 @@ def detect_objects():
 
     class_labels = model.names
 
+    # Process 10 input images
     for idx in range(10):
         image_path = input_dir / f"{idx}.png"
         if not image_path.exists():
@@ -28,10 +31,12 @@ def detect_objects():
         if image is None:
             continue
 
+        # Run YOLO detection and save annotated image
         results = model(str(image_path))
         annotated = results[0].plot()
         cv2.imwrite(str(output_dir / f"{idx}_detected.png"), annotated)
 
+        # Extract bounding boxes and class labels
         boxes = results[0].boxes.xyxy.cpu().numpy()
         classes = results[0].boxes.cls.cpu().numpy()
         scores = results[0].boxes.conf.cpu().numpy()
@@ -44,6 +49,7 @@ def detect_objects():
             label = class_labels.get(int(cls), "unknown")
             detections.append({"label": label, "bbox_modal": [x1, y1, x2, y2]})
 
+        # Save detections as JSON
         with open(output_dir / f"{idx}.json", "w") as f:
             json.dump(detections, f, indent=2)
 
@@ -51,24 +57,29 @@ def detect_objects():
 
 # === UTILITY FUNCTIONS ===
 def load_camera_intrinsics(filepath):
+    # Load camera intrinsics (3x3 matrix) from JSON
     with open(filepath, "r") as f:
         return np.array(json.load(f)["K"])
 
 def load_pose_predictions(filepath):
+    # Load predicted poses from JSON
     with open(filepath, "r") as f:
         return json.load(f)
 
 def get_3d_bbox_vertices(half_dims):
+    # Generate 8 bounding box corners based on half-dimensions
     x, y, z = half_dims
     return np.array([[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],
                      [-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]])
 
 def project_3d_to_2d(points_3d, K):
+    # Project 3D points into 2D image plane using intrinsics
     points_2d = K @ points_3d.T
     points_2d /= points_2d[2]
     return points_2d[:2].T.astype(int)
 
 def draw_bounding_box(image, points_2d, color=(255, 255, 0), thickness=2):
+    # Draw 3D bounding box edges on image
     edges = [(0,1),(1,2),(2,3),(3,0),
              (4,5),(5,6),(6,7),(7,4),
              (0,4),(1,5),(2,6),(3,7)]
@@ -76,6 +87,7 @@ def draw_bounding_box(image, points_2d, color=(255, 255, 0), thickness=2):
         cv2.line(image, tuple(points_2d[a]), tuple(points_2d[b]), color, thickness)
 
 def draw_axes(image, transform, K, length=0.05):
+    # Draw coordinate axes (XYZ) at object pose
     origin = transform[:3, 3]
     axes = np.eye(3) * length
     points = np.stack([origin] + [origin + transform[:3,:3] @ a for a in axes])
@@ -87,11 +99,13 @@ def draw_axes(image, transform, K, length=0.05):
 
 # === VISUALIZATION ===
 def visualize_pose_estimates():
+    # Load images, intrinsics and pose predictions
     rgb_path = "megapose6d/local_data/examples/morobot/image_rgb.png"
     pose_path = "megapose6d/local_data/examples/morobot/outputs/object_data.json"
     intrinsics_path = "megapose6d/local_data/examples/morobot/camera_intrinsic.json"
     out_path = "megapose6d/local_data/examples/morobot/visualizations/poses.png"
 
+    # Known object dimensions
     object_dimensions = {
         "1A_gray": (0.01045, 0.04, 0.0505),
         "1A_yellow": (0.01045, 0.04, 0.0505),
@@ -108,6 +122,7 @@ def visualize_pose_estimates():
         if name not in object_dimensions:
             continue
 
+        # Convert quaternion and translation to transformation matrix
         size = object_dimensions[name]
         quat, trans = obj["TWO"]
         rotation = R.from_quat(quat).as_matrix()
@@ -116,6 +131,7 @@ def visualize_pose_estimates():
         tf[:3,:3] = rotation
         tf[:3,3] = trans
 
+        # Transform and project 3D bounding box
         vertices = get_3d_bbox_vertices(size)
         vertices_hom = np.hstack([vertices, np.ones((8,1))])
         transformed = (tf @ vertices_hom.T).T[:, :3]
@@ -124,6 +140,7 @@ def visualize_pose_estimates():
         draw_bounding_box(image, projected)
         draw_axes(image, tf, K)
 
+        # Add object label
         label_pos = tuple(np.mean(projected, axis=0).astype(int))
         cv2.putText(image, name, label_pos, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,255), 2)
 
@@ -132,6 +149,7 @@ def visualize_pose_estimates():
 
 # === FILE HANDLING ===
 def run_command(cmd):
+    # Run shell command (e.g., Python script)
     subprocess.run(cmd, check=True)
 
 def copy_file(src, dst):
@@ -146,6 +164,7 @@ def make_dir(path):
     os.makedirs(path, exist_ok=True)
 
 def verify_meshes():
+    # Try loading each .ply mesh to confirm they are valid
     import trimesh
     mesh_dir = "data/morobot/meshes"
     for file in os.listdir(mesh_dir):
@@ -154,32 +173,32 @@ def verify_meshes():
 
 # === MAIN PIPELINE ===
 def process_all_images():
+    # Loop through all image indices
     for idx in range(10):
         base = "megapose6d/local_data/examples/morobot"
 
-        # Copy input files into example folder
+        # Copy required files into MegaPose example directory
         copy_file(f"data/rgb/{idx}.png", f"{base}/image_rgb.png")
         copy_file(f"data/depth/{idx}.png", f"{base}/image_depth.png")
         copy_file(f"data/yolo_detections/{idx}.json", f"{base}/inputs/object_data.json")
         copy_file("data/camera_intrinsic.json", f"{base}/camera_intrinsic.json")
         replace_directory("data/morobot/meshes", f"{base}/meshes")
 
-        # Run inference and visualization commands
+        # Run MegaPose inference steps
         run_command(["python", "-m", "megapose.scripts.run_inference_on_example", "morobot", "--vis-detections"])
         run_command(["python", "-m", "megapose.scripts.run_inference_on_example", "morobot", "--run-inference"])
         run_command(["python", "-m", "megapose.scripts.run_inference_on_example", "morobot", "--vis-outputs"])
         visualize_pose_estimates()
 
-        # Save poses visualization with index
+        # Save pose and detection visualizations
         make_dir(f"{base}/visualizations/pose")
         shutil.copy2(f"{base}/visualizations/poses.png", f"{base}/visualizations/pose/{idx}_poses.png")
 
-        # Save YOLO detection image with index if exists
         yolo_img = f"data/yolo_detections/{idx}_detected.png"
         if os.path.exists(yolo_img):
             shutil.copy2(yolo_img, f"{base}/visualizations/yolo_detections/{idx}_yolo_detected.png")
 
-        # === Save all_results.png and object_data.json BEFORE cleanup ===
+        # Save all_results and object_data if they exist
         all_results_src = f"{base}/visualizations/all_results.png"
         all_results_dst_dir = f"{base}/visualizations/all_results"
         make_dir(all_results_dst_dir)
@@ -198,7 +217,7 @@ def process_all_images():
         if os.path.exists(yolo_detected_src):
             shutil.copy2(yolo_detected_src, f"{yolo_detected_dst_dir}/{idx}_yolo_detected.png")
 
-    # Clean up temporary files AFTER saving results
+    # Remove temporary files to keep workspace clean
     cleanup_files = [
         "inputs/object_data.json",
         "outputs/object_data.json",
