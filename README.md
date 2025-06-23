@@ -13,6 +13,8 @@ So therefore the box dimensions are the same.
 # 1. Working environment
 All the current packages are listed in the file environment_packages.txt
 
+Ubuntu 22.04.
+
 Python version: 3.9.23
 
 My PyTorch Version: 1.11.0.post202
