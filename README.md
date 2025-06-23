@@ -1,7 +1,7 @@
-## 6D_pose_estimation
+# 6D_pose_estimation
 Estimating the 6D pose of morobot parts with trained yolo model and megapose6D.
 
-## DISCLAIMER
+# DISCLAIMER
 I got help from a collegue, since many things did not work with me.
 
 Therefore, they may be many logic similiarities.
@@ -10,7 +10,7 @@ Also the .ply files are from them, since it did not work with mine, but with the
 I could, unfortunately not resolve this issue.
 So therefore the box dimensions are the same.
 
-## 1. Working environment
+# 1. Working environment
 All the current packages are listed in the file environment_packages.txt
 
 Python version: 3.9.23
@@ -21,7 +21,7 @@ Cuda Version: 11.2
 
 
 
-## 2. Requirements
+# 2. Requirements
 The following things are required for this project to work:
 
 Ultralytics
@@ -37,7 +37,7 @@ pip install ultralytics opencv-python numpy scipy trimesh
 
 ```
 
-## 3. Installation
+# 3. Installation
 First download my GitHub repository:
 
 ```bash
@@ -45,7 +45,7 @@ git clone https://github.com/leoniebolt/6D_pose_estimation.git
 cd 6D_pose_estimation
 ```
 
-# megapose6d
+## megapose6d
 The GitHub of megapose6d: https://github.com/megapose6d/megapose6d/tree/master
 
 
@@ -94,17 +94,22 @@ In the folder morobot you should delete all the .txt files (in all folders and s
 
 I somehow cannot make an empty folder in github.
 
-Into that folder copy the morobot folder in 6D_pose_estimation/data, which contains the following:
+The folder "morobot" contains the following:
 
-- Folder "meshes":
-  In there you should put the .ply files. Every morobot part into its respective folder in "meshes".
-  So for example for the morobot-s_Achse-1A_gray: meshes/1A_gray/1A_gray.ply, and so on.
 - file camera_data.json
 - file camera_intrinsic.json
+- folders with a .txt file which should be deleted.
 
-(I have attached the .ply files into the submission)
+I have attached the meshes folder with .ply files into the submission. That folder shall be moved into the morobot folder.
+After removing the .txt files and copying the meshes folder into the morobot folder, move it to the following two destinations:
 
-## 3 Starting
+6D_pose_estimation/data
+
+6D_pose_estimation/megapose6d/local_data/examples
+
+
+
+# 3 Starting
 
 While being in the 6D_pose_estimation folder and activated conda environment run:
 
@@ -126,8 +131,8 @@ export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 and run the main.py file again.
 
 
-## 4. Explanation of Pipeline (main.py)
-# 4.1 Object Detection with YOLO
+# 4. Explanation of Pipeline (main.py)
+## 4.1 Object Detection with YOLO
 
 - Loads a pretrained YOLOv8 model.
 - Detects objects in RGB images
@@ -140,13 +145,13 @@ and run the main.py file again.
 
 
 
-# 4.2 Preparation for MegaPose
+## 4.2 Preparation for MegaPose
 
 - Copies RGB, depth, detection, camera intrinsics, mesh files into the megapose example directory.
 - Validates 3D mesh files using trimesh. Since I had often problems with my .ply files, I implemented a debugging feature. I used the .ply files from a collegue, since for some reason, I couldn't export my own .ply files.
 
 
-# 4.3 Pose Estimation with MegaPose
+## 4.3 Pose Estimation with MegaPose
 
 - Runs the official megapose inference script:
     - Detection visualization
@@ -158,7 +163,7 @@ and run the main.py file again.
 
 
  
-# 4.4 Visualization
+## 4.4 Visualization
 
 - Renders 3D bounding boxed and coordinate axes from predicted poses onte original image.
 - Saves visualized output per frame for each image index.
@@ -168,7 +173,7 @@ and run the main.py file again.
 
 
 
-# 4.5 Postprocessing & Cleanup
+## 4.5 Postprocessing & Cleanup
 
 - Saves results
 - Deletes temporary intermediate files to keep workspace clean.
